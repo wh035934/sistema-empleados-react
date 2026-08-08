@@ -6,10 +6,10 @@ import './App.css';
 
 function App() {
   return(
-    <div className="app-container">
+    <div className="app-container font-sans bg-gray-100 min-h-screen">
       <Menu/>
       <div className="contenido">
-        <h1>Sistema de Gestión de Empleados</h1>
+        <h1 className="font-bold text-3xl">Sistema de Gestión de Empleados</h1>
         <TablaEmpleados />
       </div>
     </div>
