@@ -2,20 +2,10 @@ import React from 'react';
 import { Flex, Space, Table, Tag } from 'antd';
 const columns = [
   {
-    title: 'Name',
+    title: 'Vacant Name',
     dataIndex: 'name',
     key: 'name',
     render: text => <a>{text}</a>,
-  },
-  {
-    title: 'LastName',
-    dataIndex: 'lastName',
-    key: 'lastName',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
   },
   {
     title: 'Estado',
@@ -51,25 +41,19 @@ const columns = [
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    lastName: 'Brown',
-    age: 32,
-    estado: ['nice', 'developer'],
+    name: 'Desarrollador Web',
+    estado: ['activa'],
   },
   {
     key: '2',
-    name: 'Jim Green',
-    lastName: 'Green',
-    age: 42,
-    estado: ['kawaii'],
+    name: 'Diseñador Gráfico',
+    estado: ['desactivada'],
   },
   {
     key: '3',
-    name: 'Joe Black',
-    lastName: 'Black',
-    age: 32,
-    estado: ['cool', 'teacher'],
+    name: 'Asistente Administrativo',
+    estado: ['activa'],
   },
 ];
-const TablaEmpleados = () => <Table columns={columns}    rowSelection={{}} dataSource={data} />;
-export default TablaEmpleados;
+const TablaVacantes = () => <Table columns={columns}    rowSelection={{}} dataSource={data} />;
+export default TablaVacantes;
