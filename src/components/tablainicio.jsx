@@ -1,34 +1,46 @@
 import React from 'react';
 import { Table } from 'antd';
 const columns = [
-  { title: 'Name', dataIndex: 'name', key: 'name' },
+  { title: 'Nombres', dataIndex: 'nombres', key: 'nombres' },
   Table.EXPAND_COLUMN,
-  { title: 'Age', dataIndex: 'age', key: 'age' },
-  { title: 'Address', dataIndex: 'address', key: 'address' },
+  { title: 'Apellidos', dataIndex: 'apellidos', key: 'apellidos' },
+  { title: 'Edad', dataIndex: 'edad', key: 'edad' },
+  { title: 'Area', dataIndex: 'area', key: 'area' },
+  { title: 'Puesto', dataIndex: 'puesto', key: 'puesto' },
 ];
 const data = [
   {
     key: 1,
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    nombres: 'John',
+    apellidos: 'Brown',
+    edad: 32,
+    area: 'Engineering',
+    puesto: 'Software Engineer'
   },
   {
     key: 2,
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',  },
+    nombres: 'Jim',
+    apellidos: 'Green',
+    edad: 42,
+    area: 'Marketing',
+    puesto: 'Marketing Specialist'
+  },
   {
     key: 3,
-    name: 'Not Expandable',
-    age: 29,
+    nombres: 'Juan',
+    apellidos: 'Gray',
     address: 'Jiangsu No. 1 Lake Park',
+    edad: 29,
+    area: 'Sales',
+    puesto: 'Sales Associate'
   },
   {
     key: 4,
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
+    nombres: 'Joe',
+    apellidos: 'Black',
+    edad: 32,
+    area: 'Engineering',
+    puesto: 'Software Engineer'
   },
 ];
 const TablaInicio = () => (

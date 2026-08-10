@@ -2,44 +2,34 @@ import React from 'react';
 import { Flex, Space, Table, Tag } from 'antd';
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'Nombres',
+    dataIndex: 'nombres',
+    key: 'nombres',
     render: text => <a>{text}</a>,
   },
   {
-    title: 'LastName',
-    dataIndex: 'lastName',
-    key: 'lastName',
+    title: 'Apellidos',
+    dataIndex: 'apellidos',
+    key: 'apellidos',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Edad',
+    dataIndex: 'edad',
+    key: 'edad',
   },
   {
-    title: 'Estado',
-    key: 'estado',
-    dataIndex: 'estado',
-    render: (_, { estado }) => (
-      <Flex gap="small" align="center" wrap>
-        {estado.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'kawaii') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </Flex>
-    ),
+    title: 'Area',
+    dataIndex: 'area',
+    key: 'area',
   },
   {
-    title: 'Action',
-    key: 'action',
+    title: 'Puesto',
+    dataIndex: 'puesto',
+    key: 'puesto',
+  },
+  {
+    title: 'Accion',
+    key: 'acccion',
     render: (_, record) => (
       <Space size="medium">
         <a>Modify</a>
@@ -51,24 +41,27 @@ const columns = [
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    lastName: 'Brown',
-    age: 32,
-    estado: ['nice', 'developer'],
+    nombres: 'John',
+    apellidos: 'Brown',
+    edad: 32,
+    area: 'Engineering',
+    puesto: 'Software Engineer',
   },
   {
     key: '2',
-    name: 'Jim Green',
-    lastName: 'Green',
-    age: 42,
-    estado: ['kawaii'],
+    nombres: 'Jim',
+    apellidos: 'Green',
+    edad: 42,
+    area: 'Sales',
+    puesto: 'Sales Associate',
   },
   {
     key: '3',
-    name: 'Joe Black',
-    lastName: 'Black',
-    age: 32,
-    estado: ['cool', 'teacher'],
+    nombres: 'Joe',
+    apellidos: 'Black',
+    edad: 32,
+    area: 'Marketing',
+    puesto: 'Marketing Specialist',
   },
 ];
 const TablaEmpleados = () => <Table columns={columns}    rowSelection={{}} dataSource={data} />;
