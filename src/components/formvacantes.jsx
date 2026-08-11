@@ -1,32 +1,56 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-const Formvacantes = () => (
-  <Form
-    name="wrap"
-    labelCol={{ flex: '110px' }}
-    labelAlign="left"
-    labelWrap
-    wrapperCol={{ flex: 1 }}
-    colon={false}
-    style={{ maxWidth: 600 }}
-  >
-    <Form.Item label="Nombre vacante" name="nombre" rules={[{ required: true }]}>
-      <Input />
-    </Form.Item>
+import { Button, Form, Input, Select, Row, Col } from 'antd';
 
-    <Form.Item label="Área" name="area" rules={[{ required: true }]}>
-      <Input />
-    </Form.Item>
-    
-    <Form.Item label="Estado" name="estado" rules={[{ required: true }]}>
-      <Input />
-    </Form.Item>
+const Formvacantes = ({ onAgregar }) => {
+  const [form] = Form.useForm();
 
-    <Form.Item label=" ">
-      <Button type="primary" htmlType="submit">
-        Agregar Vacante
-      </Button>
-    </Form.Item>
-  </Form>
-);
+  const onFinish = (values) => {
+    onAgregar(values);
+    form.resetFields();
+  };
+
+  return (
+    <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Row gutter={16}>
+        <Col span={8}>
+          <Form.Item label="Nombre vacante" name="nombre" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label="Área" name="area" rules={[{ required: true }]}>
+            <Select
+              placeholder="Selecciona"
+              options={[
+                { value: 'sistemas', label: 'sistemas' },
+                { value: 'marketing', label: 'marketing' },
+                { value: 'administracion', label: 'administracion' },
+              ]}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item label="Estado" name="estado" rules={[{ required: true }]}>
+            <Select
+              placeholder="Selecciona"
+              options={[
+                { value: 'activa', label: 'Activa' },
+                { value: 'urgente', label: 'Urgente' },
+                { value: 'pausada', label: 'Pausada' },
+                { value: 'cerrada', label: 'Cerrada' },
+              ]}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Agregar Vacante
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
 export default Formvacantes;
