@@ -33,7 +33,11 @@ function App() {
       <div className="contenido">
         <h1 className="font-bold text-3xl mb-8">Sistema de Gestión de Empleados</h1>
          <Routes>
-          <Route path="/" element={<TablaInicio />} />
+          <Route path="/" element={<>
+                <TablaInicio data={empleados} />
+              </>
+            } 
+            />
           <Route
             path="/gestion"
             element={

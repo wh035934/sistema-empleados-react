@@ -1,5 +1,6 @@
 import React from 'react';
-import { Flex, Space, Table, Tag } from 'antd';
+import { Space, Table, Tag } from 'antd';
+
 const columns = [
   {
     title: 'Nombre de la Vacante',
@@ -17,25 +18,17 @@ const columns = [
     title: 'Estado',
     key: 'estado',
     dataIndex: 'estado',
-    render: (_, { estado }) => (
-      <Flex gap="small" align="center" wrap>
-        {estado.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'urgente') {
-            color = 'revision';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </Flex>
-    ),
+    render: (estado) => {
+      let color = estado.length > 5 ? 'geekblue' : 'green';
+      if (estado === 'urgente') {
+        color = 'volcano';
+      }
+      return <Tag color={color}>{estado.toUpperCase()}</Tag>;
+    },
   },
   {
     title: 'Accion',
-    key: 'acccion',
+    key: 'accion',
     render: (_, record) => (
       <Space size="medium">
         <a>Modify</a>
@@ -44,25 +37,7 @@ const columns = [
     ),
   },
 ];
-const data = [
-  {
-    key: '1',
-    nombre: 'Desarrollador Web',
-    area: 'Engineering',
-    estado: ['activa'],
-  },
-  {
-    key: '2',
-    nombre: 'Diseñador Gráfico',
-    area: 'Design',
-    estado: ['Urgente'],
-  },
-  {
-    key: '3',
-    nombre: 'Asistente Administrativo',
-    area: 'Administration',
-    estado: ['Revision'],
-  },
-];
-const TablaVacantes = () => <Table columns={columns}    rowSelection={{}} dataSource={data} />;
+
+const TablaVacantes = ({ data }) => <Table columns={columns} dataSource={data} />;
+
 export default TablaVacantes;

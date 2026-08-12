@@ -55,14 +55,6 @@ const data = [
     area: 'Sales',
     puesto: 'Sales Associate',
   },
-  {
-    key: '3',
-    nombres: 'Joe',
-    apellidos: 'Black',
-    edad: 32,
-    area: 'Marketing',
-    puesto: 'Marketing Specialist',
-  },
 ];
-const TablaEmpleados = () => <Table columns={columns}    rowSelection={{}} dataSource={data} />;
+const TablaEmpleados = ({ data }) => <Table columns={columns} rowSelection={{}} dataSource={data} />;
 export default TablaEmpleados;
