@@ -2,18 +2,22 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   DesktopOutlined,
-  ContainerOutlined,
-  PieChartOutlined,
+  ApartmentOutlined,
+  UserOutlined,
+  HomeOutlined,
   MenuFoldOutlined,
+  LogoutOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { Button, Menu as AntMenu } from 'antd';
 
 const items = [
-  { key: '/', icon: <PieChartOutlined />, label: 'Inicio' },
-  { key: '/gestion', icon: <DesktopOutlined />, label: 'Gestion' },
-  { key: '/vacantes', icon: <ContainerOutlined />, label: 'Vacantes' },
+  { key: '/', icon: <HomeOutlined />, label: 'Inicio' },
+  { key: '/gestion', icon: <ApartmentOutlined />, label: 'Gestion' },
+  { key: '/vacantes', icon: <DesktopOutlined />, label: 'Vacantes' },
+  { key: '/Usuario', icon: <UserOutlined />, label: 'Usuario' },
 ];
+
 
 const Menu = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -25,6 +29,9 @@ const Menu = () => {
 
   const handleClick = ({ key }) => {
     navigate(key);
+  };
+  const handleLogout = () => {
+  navigate('/login');
   };
 
   return (
@@ -63,6 +70,11 @@ const Menu = () => {
         items={items}
         onClick={handleClick}
       />
+      <div style={{ padding: '16px' }}>
+        <Button type="primary" danger onClick={handleLogout} block icon={<LogoutOutlined />}>
+          {!collapsed && 'Cerrar Sesión'}
+        </Button>
+      </div>
     </div>
   );
 };
