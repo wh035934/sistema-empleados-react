@@ -6,7 +6,7 @@ import Formempleado from './components/formempleado';
 import TablaVacantes from './components/TablaVacantes';
 import Formvacantes from './components/formvacantes';
 import TablaInicio from './components/TablaInicio';
-import IniciarSesion from './components/iniciosesion';
+import IniciarSesion from './components/iniciarsesion';
 import { Card, Row, Col } from 'antd';
 import Menu from './components/Menu';
 import './App.css';
