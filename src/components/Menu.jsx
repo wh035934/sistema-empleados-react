@@ -15,11 +15,10 @@ const items = [
   { key: '/', icon: <HomeOutlined />, label: 'Inicio' },
   { key: '/gestion', icon: <ApartmentOutlined />, label: 'Gestion' },
   { key: '/vacantes', icon: <DesktopOutlined />, label: 'Vacantes' },
-  { key: '/Usuario', icon: <UserOutlined />, label: 'Usuario' },
+  { key: '/usuario', icon: <UserOutlined />, label: 'Usuario' },
 ];
 
-
-const Menu = () => {
+const Menu = ({ onLogout }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
@@ -30,8 +29,9 @@ const Menu = () => {
   const handleClick = ({ key }) => {
     navigate(key);
   };
+
   const handleLogout = () => {
-  navigate('/login');
+    onLogout();
   };
 
   return (
@@ -54,10 +54,7 @@ const Menu = () => {
         {!collapsed && (
           <h2 style={{ color: 'white', margin: 0 }}>Menú</h2>
         )}
-        <Button
-          type="primary"
-          onClick={toggleCollapsed}
-        >
+        <Button type="primary" onClick={toggleCollapsed}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
       </div>
@@ -70,6 +67,7 @@ const Menu = () => {
         items={items}
         onClick={handleClick}
       />
+
       <div style={{ padding: '16px' }}>
         <Button type="primary" danger onClick={handleLogout} block icon={<LogoutOutlined />}>
           {!collapsed && 'Cerrar Sesión'}

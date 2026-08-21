@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button, Form, Input, Checkbox, Card, Typography } from 'antd';
-import { useNavigate, Link } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const IniciarSesion = () => {
-  const navigate = useNavigate();
-
+const IniciarSesion = ({ onLogin }) => {
   const onFinish = (values) => {
-    console.log('Datos del login:', values);
-    navigate('/');
+    if (values.email === 'wh035934@gmail.com' && values.password === '321contra') {
+      onLogin();
+    } else {
+      alert('Usuario o contraseña incorrectos');
+    }
   };
 
   return (
@@ -25,7 +25,7 @@ const IniciarSesion = () => {
     >
       <Title level={2} style={{ marginBottom: 4 }}>¡Bienvenido de nuevo!</Title>
       <Text type="secondary" style={{ marginBottom: 24 }}>
-        ¿Aún no tienes una cuenta? <Link to="/registro">Crea una cuenta.</Link>
+        ¿Aún no tienes una cuenta? <a href="#">Crea una cuenta.</a>
       </Text>
 
       <Card style={{ width: 400 }}>
@@ -51,7 +51,7 @@ const IniciarSesion = () => {
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Acuérdate de mí</Checkbox>
               </Form.Item>
-              <Link to="/recuperar">¿Has olvidado tu contraseña?</Link>
+              <a href="#">¿Has olvidado tu contraseña?</a>
             </div>
           </Form.Item>
 

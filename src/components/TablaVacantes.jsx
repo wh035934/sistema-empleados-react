@@ -38,6 +38,6 @@ const columns = [
   },
 ];
 
-const TablaVacantes = ({ data }) => <Table columns={columns} dataSource={data} />;
+const TablaVacantes = ({ data }) => <Table columns={columns} dataSource={data} rowKey="id"/>;
 
 export default TablaVacantes;

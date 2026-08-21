@@ -38,23 +38,5 @@ const columns = [
     ),
   },
 ];
-const data = [
-  {
-    key: '1',
-    nombres: 'John',
-    apellidos: 'Brown',
-    edad: 32,
-    area: 'Engineering',
-    puesto: 'Software Engineer',
-  },
-  {
-    key: '2',
-    nombres: 'Jim',
-    apellidos: 'Green',
-    edad: 42,
-    area: 'Sales',
-    puesto: 'Sales Associate',
-  },
-];
-const TablaEmpleados = ({ data }) => <Table columns={columns} rowSelection={{}} dataSource={data} />;
+const TablaEmpleados = ({ data }) => <Table columns={columns} rowSelection={{}} dataSource={data} rowKey="id"/>;
 export default TablaEmpleados;
