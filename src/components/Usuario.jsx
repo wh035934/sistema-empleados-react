@@ -1,8 +1,9 @@
-import React from 'react';
-import { Avatar, Card, Table, Button, Space, Tag } from 'antd';
+import React, { useState } from 'react';
+import { Avatar, Card, Table, Button, Space, Tag, Modal } from 'antd';
 import { UserOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import Registro from './registro';
 
-const columns = [
+const columnsBase = [
   { title: 'Nombre', dataIndex: 'nombre', key: 'nombre' },
   { title: 'Correo', dataIndex: 'correo', key: 'correo' },
   {
@@ -14,25 +15,48 @@ const columns = [
     ),
   },
   { title: 'Fecha de Creación', dataIndex: 'fecha', key: 'fecha' },
-  {
-    title: 'Acciones',
-    key: 'acciones',
-    render: () => (
-      <Space size="middle">
-        <Button icon={<EditOutlined />} size="small" />
-        <Button icon={<DeleteOutlined />} size="small" danger />
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  { key: '1', nombre: 'Juan Pérez', correo: 'juan.perez@example.com', rol: 'Administrador', fecha: '05/08/2023' },
-  { key: '2', nombre: 'Maria Lopez', correo: 'maria.lopez@example.com', rol: 'Empleado', fecha: '12/03/2023' },
-  { key: '3', nombre: 'Carlos Sanchez', correo: 'carlos.sanchez@example.com', rol: 'Empleado', fecha: '18/01/2023' },
 ];
 
 const Usuario = () => {
+  const [usuarios, setUsuarios] = useState([
+    { key: '1', nombre: 'Juan Pérez', correo: 'juan.perez@example.com', rol: 'Administrador', fecha: '05/08/2023' },
+    { key: '2', nombre: 'Maria Lopez', correo: 'maria.lopez@example.com', rol: 'Empleado', fecha: '12/03/2023' },
+    { key: '3', nombre: 'Carlos Sanchez', correo: 'carlos.sanchez@example.com', rol: 'Empleado', fecha: '18/01/2023' },
+  ]);
+
+  const [modalAbierto, setModalAbierto] = useState(false);
+
+  const abrirModal = () => {
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = () => {
+    setModalAbierto(false);
+  };
+
+  const agregarUsuario = (nuevoUsuario) => {
+    const hoy = new Date().toLocaleDateString('es-MX');
+    setUsuarios(prev => [
+      ...prev,
+      { ...nuevoUsuario, key: Date.now().toString(), fecha: hoy },
+    ]);
+    cerrarModal();
+  };
+
+  const columns = [
+    ...columnsBase,
+    {
+      title: 'Acciones',
+      key: 'acciones',
+      render: () => (
+        <Space size="middle">
+          <Button icon={<EditOutlined />} size="small" />
+          <Button icon={<DeleteOutlined />} size="small" danger />
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div>
       <Card style={{ marginBottom: 24 }}>
@@ -52,13 +76,22 @@ const Usuario = () => {
       <Card
         title="Gestión de Usuarios"
         extra={
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" icon={<PlusOutlined />} onClick={abrirModal}>
             Crear Usuario
           </Button>
         }
       >
-        <Table columns={columns} dataSource={data} rowKey="key" />
+        <Table columns={columns} dataSource={usuarios} rowKey="key" />
       </Card>
+
+      <Modal
+        title="Crear Usuario"
+        open={modalAbierto}
+        onCancel={cerrarModal}
+        footer={null}
+      >
+        <Registro onAgregar={agregarUsuario} />
+      </Modal>
     </div>
   );
 };
