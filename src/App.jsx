@@ -1,6 +1,6 @@
 import './index.css';
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect} from 'react';
+import { useState } from 'react';
 import TablaEmpleados from './components/TablaEmpleados';
 import Formempleado from './components/formempleado';
 import TablaVacantes from './components/TablaVacantes';
@@ -8,38 +8,18 @@ import Formvacantes from './components/formvacantes';
 import TablaInicio from './components/TablaInicio';
 import IniciarSesion from './components/iniciosesion';
 import Usuario from './components/Usuario';
-import { Card, Row, Col } from 'antd';
+import { Card, message } from 'antd';
 import Menu from './components/Menu';
-import { supabase } from './supabaseClient';
 import './App.css';
 
 
 function App() {
-useEffect(() => {
-  const cargarEmpleados = async () => {
-    const { data, error } = await supabase.from('empleados').select('*');
-    if (error) {
-      console.log('Error cargando empleados:', error);
-    } else {
-      setEmpleados(data);
-    }
-  };
-
-  const cargarVacantes = async () => {
-    const { data, error } = await supabase.from('vacantes').select('*');
-    if (error) {
-      console.log('Error cargando vacantes:', error);
-    } else {
-      setVacantes(data);
-    }
-  };
-
-  cargarEmpleados();
-  cargarVacantes();
-}, []);
   const [empleados, setEmpleados] = useState([]);
   const [vacantes, setVacantes] = useState([]);
   const [sesionIniciada, setSesionIniciada] = useState(false);
+  const [cargando] = useState(false);
+  const [editingEmpleado, setEditingEmpleado] = useState(null);
+  const [editingVacante, setEditingVacante] = useState(null);
 
   const iniciarSesion = () => {
     setSesionIniciada(true);
@@ -49,12 +29,38 @@ useEffect(() => {
     setSesionIniciada(false);
   };
 
-  const agregarVacante = (nuevaVacante) => {
-    setVacantes(prev => [...prev, { ...nuevaVacante, key: Date.now().toString() }]);
+  // --- Empleados: solo frontend (estado local) ---
+  const agregarEmpleado = (nuevoEmpleado) => {
+    const creado = { ...nuevoEmpleado, edad: Number(nuevoEmpleado.edad), id: Date.now() };
+    setEmpleados((prev) => [...prev, creado]);
   };
 
-  const agregarEmpleado = (nuevoEmpleado) => {
-    setEmpleados(prev => [...prev, { ...nuevoEmpleado, key: Date.now().toString() }]);
+  const eliminarEmpleado = (id) => {
+    setEmpleados((prev) => prev.filter((e) => e.id !== id));
+    message.success('Empleado eliminado');
+  };
+
+  const actualizarEmpleado = (id, valores) => {
+    const actualizado = { ...valores, edad: Number(valores.edad), id };
+    setEmpleados((prev) => prev.map((e) => (e.id === id ? actualizado : e)));
+    setEditingEmpleado(null);
+  };
+
+  // --- Vacantes: solo frontend (estado local) ---
+  const agregarVacante = (nuevaVacante) => {
+    const creada = { ...nuevaVacante, id: Date.now() };
+    setVacantes((prev) => [...prev, creada]);
+  };
+
+  const eliminarVacante = (id) => {
+    setVacantes((prev) => prev.filter((v) => v.id !== id));
+    message.success('Vacante eliminada');
+  };
+
+  const actualizarVacante = (id, valores) => {
+    const actualizada = { ...valores, id };
+    setVacantes((prev) => prev.map((v) => (v.id === id ? actualizada : v)));
+    setEditingVacante(null);
   };
 
   return (
@@ -64,15 +70,20 @@ useEffect(() => {
         <div className="contenido">
           <h1 className="font-bold text-3xl mb-8">Sistema de Gestión de Empleados</h1>
           <Routes>
-            <Route path="/" element={<TablaInicio data={empleados} />} />
+            <Route path="/" element={<TablaInicio data={empleados} loading={cargando} />} />
             <Route
               path="/gestion"
               element={
                 <>
-                  <Card title="Agregar empleado" style={{ marginBottom: 24 }}>
-                    <Formempleado onAgregar={agregarEmpleado} />
+                  <Card title={editingEmpleado ? "Editar empleado" : "Agregar empleado"} style={{ marginBottom: 24 }}>
+                    <Formempleado
+                      onAgregar={agregarEmpleado}
+                      editing={editingEmpleado}
+                      onActualizar={actualizarEmpleado}
+                      onCancelar={() => setEditingEmpleado(null)}
+                    />
                   </Card>
-                  <TablaEmpleados data={empleados} />
+                  <TablaEmpleados data={empleados} loading={cargando} onEliminar={eliminarEmpleado} onEditar={setEditingEmpleado} />
                 </>
               }
             />
@@ -80,10 +91,15 @@ useEffect(() => {
               path="/vacantes"
               element={
                 <>
-                  <Card title="Agregar vacante" style={{ marginBottom: 24 }}>
-                    <Formvacantes onAgregar={agregarVacante} />
+                  <Card title={editingVacante ? "Editar vacante" : "Agregar vacante"} style={{ marginBottom: 24 }}>
+                    <Formvacantes
+                      onAgregar={agregarVacante}
+                      editing={editingVacante}
+                      onActualizar={actualizarVacante}
+                      onCancelar={() => setEditingVacante(null)}
+                    />
                   </Card>
-                  <TablaVacantes data={vacantes} />
+                  <TablaVacantes data={vacantes} loading={cargando} onEliminar={eliminarVacante} onEditar={setEditingVacante} />
                 </>
               }
             />

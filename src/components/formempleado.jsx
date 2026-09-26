@@ -1,12 +1,31 @@
-import React from 'react';
-import { Button, Form, Input, Select, Row, Col } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Button, Form, Input, Select, Row, Col, message, Space } from 'antd';
 
-const Formempleado = ({ onAgregar }) => {
+const Formempleado = ({ onAgregar, editing, onActualizar, onCancelar }) => {
   const [form] = Form.useForm();
+  const [guardando, setGuardando] = useState(false);
 
-  const onFinish = (values) => {
-    onAgregar(values);
-    form.resetFields();
+  useEffect(() => {
+    if (editing) form.setFieldsValue(editing);
+    else form.resetFields();
+  }, [editing, form]);
+
+  const onFinish = async (values) => {
+    setGuardando(true);
+    try {
+      if (editing) {
+        await onActualizar(editing.id, values);
+        message.success('Empleado actualizado');
+      } else {
+        await onAgregar(values);
+        form.resetFields();
+        message.success('Empleado guardado');
+      }
+    } catch {
+      // el error ya se muestra en App.jsx
+    } finally {
+      setGuardando(false);
+    }
   };
 
   return (
@@ -49,9 +68,12 @@ const Formempleado = ({ onAgregar }) => {
         </Col>
         <Col span={8} style={{ display: 'flex', alignItems: 'flex-end' }}>
           <Form.Item style={{ width: '100%' }}>
-            <Button type="primary" htmlType="submit" block>
-              Agregar Empleado
-            </Button>
+            <Space style={{ width: '100%' }}>
+              <Button type="primary" htmlType="submit" block loading={guardando}>
+                {editing ? 'Actualizar Empleado' : 'Agregar Empleado'}
+              </Button>
+              {editing && <Button onClick={() => { form.resetFields(); onCancelar?.(); }}>Cancelar</Button>}
+            </Space>
           </Form.Item>
         </Col>
       </Row>

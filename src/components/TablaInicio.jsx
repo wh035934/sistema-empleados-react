@@ -8,11 +8,13 @@ const columns = [
   { title: 'Puesto', dataIndex: 'puesto', key: 'puesto' },
 ];
 
-const TablaInicio = ({ data }) => (
+const TablaInicio = ({ data, loading }) => (
   <Table
     columns={columns}
     dataSource={data}
     rowKey="id"
+    loading={loading}
+    pagination={{ pageSize: 10 }}
   />
 );
 export default TablaInicio;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Avatar, Card, Table, Button, Space, Tag, Modal } from 'antd';
 import { UserOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import Registro from './registro';
+import Perfil from './perfil';
 
 const columnsBase = [
   { title: 'Nombre', dataIndex: 'nombre', key: 'nombre' },
@@ -25,6 +26,8 @@ const Usuario = () => {
   ]);
 
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [perfilAbierto, setPerfilAbierto] = useState(false);
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
 
   const abrirModal = () => {
     setModalAbierto(true);
@@ -32,6 +35,16 @@ const Usuario = () => {
 
   const cerrarModal = () => {
     setModalAbierto(false);
+  };
+
+  const abrirPerfil = () => {
+    setUsuarioSeleccionado(usuarios[0]);
+    setPerfilAbierto(true);
+  };
+
+  const cerrarPerfil = () => {
+    setPerfilAbierto(false);
+    setUsuarioSeleccionado(null);
   };
 
   const agregarUsuario = (nuevoUsuario) => {
@@ -69,7 +82,7 @@ const Usuario = () => {
               <Tag color="green" style={{ marginTop: 4 }}>En línea</Tag>
             </div>
           </div>
-          <Button type="primary">Editar Perfil</Button>
+          <Button type="primary" onClick={abrirPerfil}>Editar Perfil</Button>
         </div>
       </Card>
 
@@ -91,6 +104,15 @@ const Usuario = () => {
         footer={null}
       >
         <Registro onAgregar={agregarUsuario} />
+      </Modal>
+
+      <Modal
+        title="Perfil del usuario"
+        open={perfilAbierto}
+        onCancel={cerrarPerfil}
+        footer={null}
+      >
+        <Perfil usuario={usuarioSeleccionado} />
       </Modal>
     </div>
   );
